@@ -1,0 +1,424 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>E-Commerce Store</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header>
+
+        <div class="logo">
+            <h1>E-Commerce</h1>
+            <span>Store</span>
+        </div>
+
+        <!-- SEARCH + CATEGORY -->
+
+        <div class="nav-search">
+
+            <input
+                type="text"
+                id="search-input"
+                placeholder="🔍 Search products..."
+            >
+
+            <select id="category-filter">
+                <option value="all">All Categories</option>
+            </select>
+
+        </div>
+
+        <!-- NAV ACTIONS -->
+
+        <div class="header-actions">
+
+            <div id="user-info" class="user-info">
+                Guest
+            </div>
+
+            <button
+                class="nav-btn auth-nav-btn"
+                onclick="showAuth('login')"
+            >
+                Login
+            </button>
+
+            <button
+                class="nav-btn register-nav-btn"
+                onclick="showAuth('register')"
+            >
+                Create Account
+            </button>
+
+            <button
+                id="orders-btn"
+                onclick="loadMyOrders()"
+            >
+                📦 Orders
+            </button>
+
+            <button
+                class="cart"
+                onclick="document.getElementById('cart-section').scrollIntoView({behavior:'smooth'})"
+            >
+                🛒 Cart
+                <span id="cart-count">0</span>
+            </button>
+
+            <button
+                id="logout-btn"
+                onclick="logout()"
+                style="display: none;"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <p class="hero-label">
+                CODEALPHA STORE
+            </p>
+
+            <h2>
+                Everything You Need,<br>
+                All in One Place.
+            </h2>
+
+            <p>
+                Discover quality products at the best prices.
+            </p>
+
+            <button
+                class="shop-now-btn"
+                onclick="document.getElementById('products-section').scrollIntoView({behavior:'smooth'})"
+            >
+                Shop Now ↓
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= AUTH ================= -->
+
+    <section id="auth-section">
+
+        <!-- REGISTER -->
+
+        <div
+            class="auth-box"
+            id="register-box"
+        >
+
+            <button
+                class="close-auth"
+                onclick="hideAuth()"
+            >
+                ×
+            </button>
+
+            <h2>Create Account</h2>
+
+            <p class="auth-subtitle">
+                Create your account to start shopping.
+            </p>
+
+            <form id="register-form">
+
+                <input
+                    type="text"
+                    id="register-name"
+                    placeholder="Full Name"
+                    required
+                >
+
+                <input
+                    type="email"
+                    id="register-email"
+                    placeholder="Email Address"
+                    required
+                >
+
+                <input
+                    type="password"
+                    id="register-password"
+                    placeholder="Password"
+                    required
+                >
+
+                <button type="submit">
+                    Create Account
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- LOGIN -->
+
+        <div
+            class="auth-box"
+            id="login-box"
+        >
+
+            <button
+                class="close-auth"
+                onclick="hideAuth()"
+            >
+                ×
+            </button>
+
+            <h2>Welcome Back</h2>
+
+            <p class="auth-subtitle">
+                Login to manage your orders.
+            </p>
+
+            <form id="login-form">
+
+                <input
+                    type="email"
+                    id="login-email"
+                    placeholder="Email Address"
+                    required
+                >
+
+                <input
+                    type="password"
+                    id="login-password"
+                    placeholder="Password"
+                    required
+                >
+
+                <button type="submit">
+                    Login
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= PRODUCTS ================= -->
+
+    <main id="products-section">
+
+        <div class="section-heading">
+
+            <span class="section-label">
+                OUR COLLECTION
+            </span>
+
+            <h2>Featured Products</h2>
+
+            <p>
+                Explore our latest products and find what you love.
+            </p>
+
+        </div>
+
+
+        <div id="products-container">
+
+            <p class="loading">
+                Loading products...
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= CART ================= -->
+
+    <section id="cart-section">
+
+        <div class="section-heading">
+
+            <span class="section-label">
+                YOUR SHOPPING
+            </span>
+
+            <h2>🛒 Shopping Cart</h2>
+
+            <p>
+                Review your selected products
+            </p>
+
+        </div>
+
+
+        <div id="cart-items">
+
+            <p class="empty-cart">
+                Your cart is empty.
+            </p>
+
+        </div>
+
+
+        <div class="cart-summary">
+
+            <div>
+
+                <span class="total-label">
+                    Cart Total
+                </span>
+
+                <h3>
+                    ₹<span id="cart-total">0</span>
+                </h3>
+
+            </div>
+
+            <button
+                id="checkout-btn"
+                onclick="checkout()"
+            >
+                Proceed to Checkout →
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= ORDERS ================= -->
+
+    <section id="orders-section">
+
+        <div class="section-heading">
+
+            <span class="section-label">
+                ORDER HISTORY
+            </span>
+
+            <h2>📦 My Orders</h2>
+
+            <p>
+                Track your previous orders
+            </p>
+
+        </div>
+
+
+        <div id="orders-container">
+
+            <div class="empty-orders">
+
+                <p>
+                    Login and click
+                    <strong>"Orders"</strong>
+                    to view your orders.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-content">
+
+            <div>
+                <h3>CodeAlpha Store</h3>
+                <p>
+                    Your trusted online shopping destination.
+                </p>
+            </div>
+
+            <div class="footer-tech">
+                <p>Built with</p>
+                <span>HTML • CSS • JavaScript • Node.js • MySQL</span>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            © 2026 CodeAlpha E-Commerce Store
+        </div>
+
+    </footer>
+
+
+    <!-- ================= AUTH UI JS ================= -->
+
+    <script>
+
+        function showAuth(type) {
+
+            const authSection =
+                document.getElementById("auth-section");
+
+            const loginBox =
+                document.getElementById("login-box");
+
+            const registerBox =
+                document.getElementById("register-box");
+
+            authSection.classList.add("show");
+
+            if (type === "login") {
+
+                loginBox.style.display = "block";
+                registerBox.style.display = "none";
+
+            } else {
+
+                registerBox.style.display = "block";
+                loginBox.style.display = "none";
+            }
+
+            authSection.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+
+
+        function hideAuth() {
+
+            document
+                .getElementById("auth-section")
+                .classList.remove("show");
+        }
+
+    </script>
+
+
+    <!-- ================= MAIN JAVASCRIPT ================= -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
+
